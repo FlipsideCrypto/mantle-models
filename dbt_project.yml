@@ -1,12 +1,12 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: "mantle_models" # replace with the name of the chain
+name: "<evm_chain>_models" # replace with the name of the chain
 version: "1.0.0"
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: "mantle" # replace with the name of the chain
+profile: "<evm_chain>" # replace with the name of the chain
 
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
@@ -26,7 +26,7 @@ clean-targets: # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 tests:
-  mantle_models: # replace with the name of the chain
+  <evm_chain>_models: # replace with the name of the chain
     +store_failures: true # all tests
   fsc_evm:
     +store_failures: true
@@ -41,7 +41,7 @@ on-run-end:
 dispatch:
   - macro_namespace: dbt
     search_order:
-      - mantle-models
+      - <evm_chain>-models
       - dbt_snowflake_query_tags
       - dbt
 
@@ -53,7 +53,7 @@ query-comment:
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
 models:
-  mantle_models: # replace with the name of the chain
+  <evm_chain>_models: # replace with the name of the chain
     +copy_grants: true
     +persist_docs:
       relation: true
@@ -101,16 +101,16 @@ vars:
       API_INTEGRATION: 
       EXTERNAL_FUNCTION_URI: 
       ROLES:
-        - AWS_LAMBDA_MANTLE_API # replace with the name of the chain
+        - AWS_LAMBDA_<EVM_CHAIN>_API # replace with the name of the chain
         - INTERNAL_DEV
 
     prod:
       API_INTEGRATION: 
       EXTERNAL_FUNCTION_URI: 
       ROLES:
-        - AWS_LAMBDA_MANTLE_API # replace with the name of the chain
+        - AWS_LAMBDA_<EVM_CHAIN>_API # replace with the name of the chain
         - INTERNAL_DEV
-        - DBT_CLOUD_MANTLE # replace with the name of the chain
+        - DBT_CLOUD_<EVM_CHAIN> # replace with the name of the chain
 
 #### STREAMLINE 2.0 END ####
 
@@ -119,9 +119,9 @@ vars:
 
   ### GLOBAL VARIABLES BEGIN ###
   ## REQUIRED
-  GLOBAL_PROD_DB_NAME: 'mantle' # replace with the name of the chain
-  GLOBAL_NODE_SECRET_PATH: 'Vault/prod/mantle/<node_provider>/<network>'
-  GLOBAL_BLOCKS_PER_HOUR: 1800 # replace with the blocks per hour of the chain
+  GLOBAL_PROD_DB_NAME: '<evm_chain>' # replace with the name of the chain
+  GLOBAL_NODE_SECRET_PATH: 'Vault/prod/<evm_chain>/<node_provider>/<network>'
+  GLOBAL_BLOCKS_PER_HOUR: 0 # replace with the blocks per hour of the chain
 
   ### GLOBAL VARIABLES END ###
 
@@ -129,12 +129,12 @@ vars:
 
   ### CORE ###
   ## REQUIRED
-  TRACES_FULL_RELOAD_START_BLOCK: 71000000 # replace with the start block
+  TRACES_FULL_RELOAD_START_BLOCK: # replace with the start block
 
   ### PRICES ###
   ## REQUIRED
-  PRICES_NATIVE_SYMBOLS: 'ETH' # replace with the native symbol(s) of the chain
-  PRICES_PROVIDER_PLATFORMS: ['mantle'] # replace with the platform name(s)of the chain
+  PRICES_NATIVE_SYMBOLS: '<NATIVE_SYMBOL>' # replace with the native symbol(s) of the chain
+  PRICES_PROVIDER_PLATFORMS: ['<evm_chain>'] # replace with the platform name(s)of the chain
   
   ### LABELS ###
 
