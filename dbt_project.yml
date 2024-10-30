@@ -122,6 +122,11 @@ vars:
   GLOBAL_PROD_DB_NAME: 'mantle' # replace with the name of the chain
   GLOBAL_NODE_SECRET_PATH: 'Vault/prod/mantle/quicknode/mainnet'
   GLOBAL_BLOCKS_PER_HOUR: 1800 # replace with the blocks per hour of the chain
+  GLOBAL_USES_MIX_HASH: True
+  GLOBAL_USES_ETH_VALUE: True
+  GLOBAL_USES_MINT: True
+  GLOBAL_USES_SOURCE_HASH: True
+  GLOBAL_USES_DEPOSIT_NONCE: True
 
   ### GLOBAL VARIABLES END ###
 
@@ -130,6 +135,15 @@ vars:
   ### CORE ###
   ## REQUIRED
   TRACES_FULL_RELOAD_START_BLOCK: 71000000 # replace with the start block
+
+  ## OPTIONAL
+  # GOLD_FULL_REFRESH: True
+  # SILVER_FULL_REFRESH: True
+
+  BLOCKS_TRANSACTIONS_REALTIME_TESTING_LIMIT: 3 
+  TRACES_REALTIME_TESTING_LIMIT: 3
+  RECEIPTS_REALTIME_TESTING_LIMIT: 3
+  CONFIRM_BLOCKS_REALTIME_TESTING_LIMIT: 3
 
   ### PRICES ###
   ## REQUIRED
