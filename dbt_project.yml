@@ -133,7 +133,7 @@ vars:
 
   ### PRICES ###
   ## REQUIRED
-  PRICES_NATIVE_SYMBOLS: 'ETH' # replace with the native symbol(s) of the chain
+  PRICES_NATIVE_SYMBOLS: 'MNT' # replace with the native symbol(s) of the chain
   PRICES_PROVIDER_PLATFORMS: ['mantle'] # replace with the platform name(s)of the chain
   
   ### LABELS ###
