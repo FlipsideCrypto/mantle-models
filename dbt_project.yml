@@ -101,16 +101,16 @@ vars:
       API_INTEGRATION: AWS_MANTLE_API_STG_V2
       EXTERNAL_FUNCTION_URI: y56j97l3vb.execute-api.us-east-1.amazonaws.com/stg/
       ROLES:
-        - AWS_LAMBDA_MANTLE_API # replace with the name of the chain
+        - AWS_LAMBDA_MANTLE_API 
         - INTERNAL_DEV
 
-    # prod:
-    #   API_INTEGRATION: AWS_MANTLE_API_PROD_V2
-    #   EXTERNAL_FUNCTION_URI: 
-    #   ROLES:
-    #     - AWS_LAMBDA_MANTLE_API # replace with the name of the chain
-    #     - INTERNAL_DEV
-    #     - DBT_CLOUD_MANTLE # replace with the name of the chain
+    prod:
+      API_INTEGRATION: AWS_MANTLE_API_PROD_V2
+      EXTERNAL_FUNCTION_URI: nkobltctqf.execute-api.us-east-1.amazonaws.com/prod/
+      ROLES:
+        - AWS_LAMBDA_MANTLE_API 
+        - INTERNAL_DEV
+        - DBT_CLOUD_MANTLE 
 
 #### STREAMLINE 2.0 END ####
 
@@ -119,9 +119,9 @@ vars:
 
   ### GLOBAL VARIABLES BEGIN ###
   ## REQUIRED
-  GLOBAL_PROD_DB_NAME: 'mantle' # replace with the name of the chain
+  GLOBAL_PROD_DB_NAME: 'mantle' 
   GLOBAL_NODE_SECRET_PATH: 'Vault/prod/mantle/quicknode/mainnet'
-  GLOBAL_BLOCKS_PER_HOUR: 1800 # replace with the blocks per hour of the chain
+  GLOBAL_BLOCKS_PER_HOUR: 1800 
   GLOBAL_USES_MIX_HASH: True
   GLOBAL_USES_ETH_VALUE: True
   GLOBAL_USES_MINT: True
@@ -138,7 +138,7 @@ vars:
 
   ## OPTIONAL
   # TRACES_FULL_RELOAD_MODE: True
-  # TRACES_FULL_RELOAD_START_BLOCK: 2500000 # replace with the start block
+  # TRACES_FULL_RELOAD_START_BLOCK: 2500000 
 
   BLOCKS_TRANSACTIONS_REALTIME_NEW_BUILD: True
   RECEIPTS_BY_HASH_REALTIME_NEW_BUILD: True
@@ -148,18 +148,19 @@ vars:
   # GOLD_FULL_REFRESH: True
   # SILVER_FULL_REFRESH: True
 
-  # BLOCKS_TRANSACTIONS_REALTIME_TESTING_LIMIT: 3 
-  # TRACES_REALTIME_TESTING_LIMIT: 3
-  # RECEIPTS_REALTIME_TESTING_LIMIT: 3
-  # CONFIRM_BLOCKS_REALTIME_TESTING_LIMIT: 3
-
   ### PRICES ###
   ## REQUIRED
-  PRICES_NATIVE_SYMBOLS: 'MNT' # replace with the native symbol(s) of the chain
-  PRICES_PROVIDER_PLATFORMS: ['mantle'] # replace with the platform name(s)of the chain
+  PRICES_NATIVE_SYMBOLS: 'MNT'
+  PRICES_PROVIDER_PLATFORMS: ['mantle'] 
   
   ### LABELS ###
 
   ### MAIN_PACKAGE VARIABLES END ###
+
+  ### DECODER_PACKAGE VARIABLES BEGIN ###
+
+  # DECODED_LOGS_REALTIME_TESTING_LIMIT: 30
+
+  ### DECODER_PACKAGE VARIABLES END ###
 
 #### FSC_EVM END ####
