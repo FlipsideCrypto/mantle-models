@@ -1,11 +1,11 @@
-name: dbt_run_streamline_decoder_history
-run-name: dbt_run_streamline_decoder_history
+name: dbt_deploy_new_workflows
+run-name: dbt_deploy_new_workflows
 
 on:
   workflow_dispatch:
     branches:
       - "main"
-    
+
 env:
   DBT_PROFILES_DIR: ./
 
@@ -25,7 +25,7 @@ jobs:
   run_dbt_jobs:
     runs-on: ubuntu-latest
     environment: 
-      name: workflow_prod
+      name: workflow_test
 
     steps:
       - uses: actions/checkout@v3
@@ -39,6 +39,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           dbt deps
-      - name: Run DBT Jobs
+          
+      - name: Deploy New Github Actions
         run: |
-          dbt run --threads 8 --vars '{"STREAMLINE_INVOKE_STREAMS":True,"WAIT":120}' -m "fsc_evm,tag:streamline_decoded_logs_complete" "fsc_evm,tag:streamline_decoded_logs_history"
+          make deploy_new_github_action DBT_TARGET=prod
