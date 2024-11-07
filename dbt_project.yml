@@ -80,6 +80,12 @@ models:
         +enabled: true
       utils:
         +enabled: true
+  decoder_package:
+      +enabled: false
+      abis:
+        +enabled: true
+      decoded_logs:
+        +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
@@ -182,7 +188,13 @@ vars:
   ### MAIN_PACKAGE VARIABLES END ###
 
   ### DECODER_PACKAGE VARIABLES BEGIN ###
+  
+  ## REQUIRED
+  BLOCK_EXPLORER_NAME: 'MantleScan'
+  BLOCK_EXPLORER_ABI_URL: 'https://api.mantlescan.xyz/api?module=contract&action=getabi&address='
+  BLOCK_EXPLORER_ABI_API_KEY_PATH: 'Vault/prod/block_explorers/mantle_scan'
 
+  ## OPTIONAL
   # DECODED_LOGS_REALTIME_TESTING_LIMIT: 30
 
   ### DECODER_PACKAGE VARIABLES END ###
