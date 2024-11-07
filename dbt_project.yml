@@ -80,7 +80,7 @@ models:
         +enabled: true
       utils:
         +enabled: true
-  decoder_package:
+    decoder_package:
       +enabled: false
       abis:
         +enabled: true
@@ -195,7 +195,7 @@ vars:
   BLOCK_EXPLORER_ABI_API_KEY_PATH: 'Vault/prod/block_explorers/mantle_scan'
 
   ## OPTIONAL
-  # DECODED_LOGS_REALTIME_TESTING_LIMIT: 30
+  DECODED_LOGS_REALTIME_TESTING_LIMIT: 30
 
   ### DECODER_PACKAGE VARIABLES END ###
 
