@@ -42,4 +42,4 @@ jobs:
           
       - name: Run Main Models
         run: |
-          dbt run -m "fsc_evm,tag:silver_core" "fsc_evm,tag:gold_core" "fsc_evm,tag:silver_prices" "fsc_evm,tag:gold_prices" "fsc_evm,tag:silver_labels" "fsc_evm,tag:gold_labels"
+          dbt run -m "fsc_evm,tag:silver_core" "fsc_evm,tag:gold_core" "fsc_evm,tag:silver_prices" "fsc_evm,tag:gold_prices" "fsc_evm,tag:silver_labels" "fsc_evm,tag:gold_labels" "fsc_evm,tag:silver_confirm_blocks"
