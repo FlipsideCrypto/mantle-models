@@ -1,5 +1,5 @@
-name: dbt_run_scheduled_main
-run-name: dbt_run_scheduled_main
+name: dbt_run_scheduled_decoded_logs
+run-name: dbt_run_scheduled_decoded_logs
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ env:
   PASSWORD: "${{ secrets.PASSWORD }}"
   REGION: "${{ vars.REGION }}"
   DATABASE: "${{ vars.DATABASE }}"
-  WAREHOUSE: BACKFILL
+  WAREHOUSE: "${{ vars.WAREHOUSE }}"
   SCHEMA: "${{ vars.SCHEMA }}"
 
 concurrency:
@@ -39,11 +39,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           dbt deps
-          
-      - name: Run Main Models
-        run: |
-          dbt run -m "fsc_evm,tag:silver_core" "fsc_evm,tag:gold_core" "fsc_evm,tag:silver_prices" "fsc_evm,tag:gold_prices" "fsc_evm,tag:silver_labels" "fsc_evm,tag:gold_labels" "fsc_evm,tag:silver_confirm_blocks"
 
-      - name: Send new logs for decoding
+      - name: Update the silver and gold tables with the latest decoded logs
         run: |
-          dbt run --vars '{"STREAMLINE_INVOKE_STREAMS":True}' -m "fsc_evm,tag:bronze_decoded_logs" "fsc_evm,tag:streamline_decoded_logs_realtime" "fsc_evm,tag:streamline_decoded_logs_complete"
+          dbt run -m "fsc_evm,tag:bronze_decoded_logs" "fsc_evm,tag:silver_decoded_logs" "fsc_evm,tag:gold_decoded_logs"
