@@ -87,11 +87,9 @@ models:
       decoded_logs:
         +enabled: true
     curated_package:
-      +enabled: false
+      +enabled: true
       silver:
-        +enabled: false
-        vertex:
-          +enabled: true
+        +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
