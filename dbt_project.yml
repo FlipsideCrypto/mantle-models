@@ -89,9 +89,13 @@ models:
     curated_package:
       +enabled: true
       silver:
-        +enabled: true
+        +enabled: false
+        vertex:
+          +enabled: true
       gold:
-        +enabled: true
+        +enabled: false
+        vertex:
+          +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
