@@ -89,7 +89,9 @@ models:
     curated_package:
       +enabled: false
       protocols:
-        +enabled: true
+        +enabled: false
+        vertex:
+          +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
