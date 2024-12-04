@@ -1,6 +1,7 @@
 workflow_name,workflow_schedule
 dbt_run_streamline_chainhead,"24,54 * * * *"
 dbt_run_scheduled_main,"2,32 * * * *"
+dbt_run_scheduled_curated,"15 */4 * * *"
 dbt_run_scheduled_decoded_logs,"9,39 * * * *"
 dbt_test_intraday,"40 */4 * * *"
 dbt_test_daily,"23 8 * * *"

@@ -86,6 +86,12 @@ models:
         +enabled: true
       decoded_logs:
         +enabled: true
+    curated_package:
+      +enabled: false
+      protocols:
+        +enabled: false
+        vertex:
+          +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
@@ -196,6 +202,16 @@ vars:
   PRICES_PROVIDER_PLATFORMS: ['mantle'] 
   
   ### LABELS ###
+
+  ### CURATED ###
+  ### VERTEX ###
+  OFFCHAIN_EXCHANGE_CONTRACT: '0x736a2ada5f4700d49da6b28a74c4a77cdb3e2994'
+  CLEARINGHOUSE_CONTRACT: '0x5bcfc8ad38ee1da5f45d9795acadf57d37fec172'
+  TOKEN_MAPPING:
+    USDC: '0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'
+    wMNT: '0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'
+    METH: '0xcda86a272531e8640cd7f1a92c01839911b90bb0'
+    WETH: '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'
 
   ### MAIN_PACKAGE VARIABLES END ###
 
