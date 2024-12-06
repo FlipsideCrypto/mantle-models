@@ -17,7 +17,8 @@ test-paths: ["tests"]
 seed-paths: ["data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
-docs-paths: ["dbt_packages/fsc_evm/doc_descriptions", "models/doc_descriptions", "models"]
+docs-paths:
+  ["dbt_packages/fsc_evm/doc_descriptions", "models/doc_descriptions", "models"]
 
 target-path: "target" # directory which will store compiled SQL files
 clean-targets: # directories to be removed by `dbt clean`
@@ -36,7 +37,7 @@ on-run-start:
   - "{{ fsc_evm.create_udfs() }}"
 
 on-run-end:
-  - '{{ fsc_evm.apply_meta_as_tags(results) }}'
+  - "{{ fsc_evm.apply_meta_as_tags(results) }}"
 
 dispatch:
   - macro_namespace: dbt
@@ -46,7 +47,7 @@ dispatch:
       - dbt
 
 query-comment:
-  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node) }}'
+  comment: "{{ dbt_snowflake_query_tags.get_query_comment(node) }}"
   append: true # Snowflake removes prefixed comments.
 
 # Configuring models
@@ -75,6 +76,8 @@ models:
       github_actions:
         +enabled: true
       labels:
+        +enabled: true
+      observability:
         +enabled: true
       prices:
         +enabled: true
@@ -105,7 +108,7 @@ vars:
   HEAL_MODELS: []
   START_GHA_TASKS: False
 
-#### STREAMLINE 2.0 BEGIN ####
+  #### STREAMLINE 2.0 BEGIN ####
 
   API_INTEGRATION: '{{ var("config")[target.name]["API_INTEGRATION"] if var("config")[target.name] else var("config")["dev"]["API_INTEGRATION"] }}'
   EXTERNAL_FUNCTION_URI: '{{ var("config")[target.name]["EXTERNAL_FUNCTION_URI"] if var("config")[target.name] else var("config")["dev"]["EXTERNAL_FUNCTION_URI"] }}'
@@ -113,39 +116,39 @@ vars:
     ["INTERNAL_DEV"]
 
   config:
-  # The keys correspond to dbt profiles and are case sensitive
+    # The keys correspond to dbt profiles and are case sensitive
     dev:
       API_INTEGRATION: AWS_MANTLE_API_STG_V2
       EXTERNAL_FUNCTION_URI: y56j97l3vb.execute-api.us-east-1.amazonaws.com/stg/
       ROLES:
-        - AWS_LAMBDA_MANTLE_API 
+        - AWS_LAMBDA_MANTLE_API
         - INTERNAL_DEV
 
     prod:
       API_INTEGRATION: AWS_MANTLE_API_PROD_V2
       EXTERNAL_FUNCTION_URI: nkobltctqf.execute-api.us-east-1.amazonaws.com/prod/
       ROLES:
-        - AWS_LAMBDA_MANTLE_API 
+        - AWS_LAMBDA_MANTLE_API
         - INTERNAL_DEV
-        - DBT_CLOUD_MANTLE 
+        - DBT_CLOUD_MANTLE
 
-#### STREAMLINE 2.0 END ####
+  #### STREAMLINE 2.0 END ####
 
-#### FSC_EVM BEGIN ####
-# Visit https://github.com/FlipsideCrypto/fsc-evm/wiki for more information on required and optional variables
+  #### FSC_EVM BEGIN ####
+  # Visit https://github.com/FlipsideCrypto/fsc-evm/wiki for more information on required and optional variables
 
   ### GLOBAL VARIABLES BEGIN ###
   ## REQUIRED
-  GLOBAL_PROD_DB_NAME: 'mantle' 
-  GLOBAL_NODE_SECRET_PATH: 'Vault/prod/mantle/quicknode/mainnet'
-  GLOBAL_BLOCKS_PER_HOUR: 1800 
+  GLOBAL_PROD_DB_NAME: "mantle"
+  GLOBAL_NODE_SECRET_PATH: "Vault/prod/mantle/quicknode/mainnet"
+  GLOBAL_BLOCKS_PER_HOUR: 1800
   GLOBAL_USES_MIX_HASH: True
   GLOBAL_USES_ETH_VALUE: True
   GLOBAL_USES_MINT: True
   GLOBAL_USES_SOURCE_HASH: True
   GLOBAL_USES_L1_COLUMNS: True
   GLOBAL_START_UP_BLOCK: 71000000
-  GLOBAL_WRAPPED_ASSET_ADDRESS: '0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'
+  GLOBAL_WRAPPED_ASSET_ADDRESS: "0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8"
 
   ### GLOBAL VARIABLES END ###
 
@@ -163,7 +166,7 @@ vars:
   # BLOCKS_TRANSACTIONS_HISTORY_PRODUCER_BATCH_SIZE: 60000
   # BLOCKS_TRANSACTIONS_HISTORY_WORKER_BATCH_SIZE: 12000
   # BLOCKS_TRANSACTIONS_HISTORY_TESTING_LIMIT: 4
-  
+
   # RECEIPTS_REALTIME_NEW_BUILD: True
   # RECEIPTS_REALTIME_TESTING_LIMIT: 3
 
@@ -190,7 +193,7 @@ vars:
   CONFIRM_BLOCKS_HISTORY_SQL_LIMIT: 1500000
   CONFIRM_BLOCKS_HISTORY_PRODUCER_BATCH_SIZE: 360000
   CONFIRM_BLOCKS_HISTORY_WORKER_BATCH_SIZE: 36000
-  CONFIRM_BLOCKS_HISTORY_ORDER_BY_CLAUSE: 'ORDER BY partition_key DESC'
+  CONFIRM_BLOCKS_HISTORY_ORDER_BY_CLAUSE: "ORDER BY partition_key DESC"
   # CONFIRM_BLOCKS_HISTORY_TESTING_LIMIT: 4
 
   # GOLD_FULL_REFRESH: True
@@ -198,29 +201,36 @@ vars:
 
   ### PRICES ###
   ## REQUIRED
-  PRICES_NATIVE_SYMBOLS: 'MNT'
-  PRICES_PROVIDER_PLATFORMS: ['mantle'] 
-  
+  PRICES_NATIVE_SYMBOLS: "MNT"
+  PRICES_PROVIDER_PLATFORMS: ["mantle"]
+
   ### LABELS ###
+
+  ### OBSERVABILITY ###
+  OBSERV_USES_EXCLUSION_LIST_BLOCKS: False
+  OBSERV_USES_EXCLUSION_LIST_TRANSACTIONS: False
+  OBSERV_USES_EXCLUSION_LIST_RECEIPTS: False
+  OBSERV_USES_EXCLUSION_LIST_LOGS: False
+  OBSERV_USES_EXCLUSION_LIST_TRACES: False
 
   ### CURATED ###
   ### VERTEX ###
-  OFFCHAIN_EXCHANGE_CONTRACT: '0x736a2ada5f4700d49da6b28a74c4a77cdb3e2994'
-  CLEARINGHOUSE_CONTRACT: '0x5bcfc8ad38ee1da5f45d9795acadf57d37fec172'
+  OFFCHAIN_EXCHANGE_CONTRACT: "0x736a2ada5f4700d49da6b28a74c4a77cdb3e2994"
+  CLEARINGHOUSE_CONTRACT: "0x5bcfc8ad38ee1da5f45d9795acadf57d37fec172"
   TOKEN_MAPPING:
-    USDC: '0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'
-    wMNT: '0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'
-    METH: '0xcda86a272531e8640cd7f1a92c01839911b90bb0'
-    WETH: '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'
+    USDC: "0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9"
+    wMNT: "0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8"
+    METH: "0xcda86a272531e8640cd7f1a92c01839911b90bb0"
+    WETH: "0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111"
 
   ### MAIN_PACKAGE VARIABLES END ###
 
   ### DECODER_PACKAGE VARIABLES BEGIN ###
-  
+
   ## REQUIRED
-  BLOCK_EXPLORER_NAME: 'MantleScan'
-  BLOCK_EXPLORER_ABI_URL: 'https://api.mantlescan.xyz/api?module=contract&action=getabi&address='
-  BLOCK_EXPLORER_ABI_API_KEY_PATH: 'Vault/prod/block_explorers/mantle_scan'
+  BLOCK_EXPLORER_NAME: "MantleScan"
+  BLOCK_EXPLORER_ABI_URL: "https://api.mantlescan.xyz/api?module=contract&action=getabi&address="
+  BLOCK_EXPLORER_ABI_API_KEY_PATH: "Vault/prod/block_explorers/mantle_scan"
 
   ## OPTIONAL
   # DECODED_LOGS_REALTIME_TESTING_LIMIT: 30
@@ -228,5 +238,4 @@ vars:
   # BRONZE_FULL_REFRESH: True
 
   ### DECODER_PACKAGE VARIABLES END ###
-
 #### FSC_EVM END ####
