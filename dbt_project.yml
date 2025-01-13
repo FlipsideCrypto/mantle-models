@@ -95,6 +95,8 @@ models:
         +enabled: false
         vertex:
           +enabled: true
+    scores_package:
+      +enabled: false
 
 vars:
   "dbt_date:time_zone": GMT
@@ -234,3 +236,4 @@ vars:
 
   ### DECODER_PACKAGE VARIABLES END ###
 #### FSC_EVM END ####
+
