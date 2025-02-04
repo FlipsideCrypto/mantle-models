@@ -44,3 +44,9 @@ sources:
     schema: silver
     tables:
       - name: verified_abis
+  - name: fsc_evm_bronze
+    database: mantle_dev #mantle_dev as a placeholder for testing, to be replaced with the correct database
+    schema: bronze
+    tables:
+      - name: fsc_evm_vars_master_config
+      - name: fsc_evm_vars_chain_values
