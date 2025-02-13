@@ -228,6 +228,8 @@ vars:
   BLOCK_EXPLORER_NAME: "MantleScan"
   BLOCK_EXPLORER_ABI_URL: "https://api.mantlescan.xyz/api?module=contract&action=getabi&address="
   BLOCK_EXPLORER_ABI_API_KEY_PATH: "Vault/prod/block_explorers/mantle_scan"
+  BLOCK_EXPLORER_ABI_INTERACTION_LIMIT: 100
+  BLOCK_EXPLORER_ABI_LIMIT: 100
 
   ## OPTIONAL
   # DECODED_LOGS_REALTIME_TESTING_LIMIT: 30

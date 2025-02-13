@@ -1,4 +1,4 @@
-version: 2 
+version: 2
 
 sources:
   - name: github_actions
@@ -18,6 +18,8 @@ sources:
       - name: traces
       - name: confirm_blocks
       - name: decoded_logs
+      - name: abi
+      - name: abi_new
   - name: crosschain_silver
     database: "{{ 'crosschain' if target.database.upper() == var('GLOBAL_PROD_DB_NAME').upper() else 'crosschain_dev' }}"
     schema: silver
