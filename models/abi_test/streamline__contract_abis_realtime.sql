@@ -25,24 +25,27 @@ WITH recent_relevant_contracts AS (
     FROM
         {{ ref('silver__relevant_contracts') }} C
 
-        left join {{ ref("bronze_api__contract_abis") }} b using (contract_address)
+{% if is_incremental() %}
+LEFT JOIN {{ ref("streamline__complete_contract_abis") }}
+s USING (contract_address)
+{% else %}
+    LEFT JOIN {{ ref("bronze_api__contract_abis") }}
+    b USING (contract_address)
+{% endif %}
+WHERE
+    1 = 1
 
-      {% if is_incremental() %}
-        LEFT JOIN {{ ref("streamline__complete_contract_abis") }} s 
-        USING (contract_address)
-        {% endif %}
-    WHERE 1 = 1 
-    and b.contract_address is null 
-       {% if is_incremental() %}
-        s._inserted_timestamp >= DATEADD(DAY, -7, SYSDATE())
-        AND s.contract_address IS NULL
-          {% endif %}
-        AND total_interaction_count > {{ var('BLOCK_EXPLORER_ABI_INTERACTION_LIMIT') }}
-        AND max_inserted_timestamp >= DATEADD(DAY, -3, SYSDATE())
-    ORDER BY
-        total_interaction_count DESC
-    LIMIT
-        {{ var('BLOCK_EXPLORER_ABI_LIMIT') }}
+{% if is_incremental() %}
+AND s.contract_address IS NULL
+{% else %}
+    AND b.contract_address IS NULL
+{% endif %}
+AND total_interaction_count > {{ var('BLOCK_EXPLORER_ABI_INTERACTION_LIMIT') }}
+AND max_inserted_timestamp >= DATEADD(DAY, -3, SYSDATE())
+ORDER BY
+    total_interaction_count DESC
+LIMIT
+    {{ var('BLOCK_EXPLORER_ABI_LIMIT') }}
 ), all_contracts AS (
     SELECT
         contract_address
@@ -63,11 +66,11 @@ SELECT
     live.udf_api(
         'GET',
         CONCAT(
-            '{{ var('BLOCK_EXPLORER_ABI_URL') }}',
+            '{{ var(' block_explorer_abi_url ') }}',
             contract_address,
             '&apikey={key}'
         ),{ 'User-Agent': 'FlipsideStreamline' },{},
-        '{{ var('BLOCK_EXPLORER_ABI_API_KEY_PATH') }}'
+        '{{ var(' block_explorer_abi_api_key_path ') }}'
     ) AS request
 FROM
     all_contracts

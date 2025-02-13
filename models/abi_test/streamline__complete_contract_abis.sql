@@ -10,6 +10,7 @@
 
 SELECT
     partition_key,
+    -- decide if need to remove this
     COALESCE(
         VALUE :"CONTRACT_ADDRESS" :: STRING,
         VALUE :"contract_address" :: STRING
@@ -30,6 +31,7 @@ WHERE
     )
 {% else %}
     {{ ref('bronze__streamline_fr_contract_abis') }}
+    -- union in bronze_api__contract_abis
 {% endif %}
 
 qualify(ROW_NUMBER() over (PARTITION BY complete_contract_abis_id
