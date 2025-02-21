@@ -45,8 +45,8 @@ sources:
     tables:
       - name: verified_abis
   - name: fsc_evm_bronze
-    database: mantle_dev #mantle_dev as a placeholder for testing, to be replaced with the correct database
+    database: "{{ 'fsc_evm' if target.database.upper() == var('GLOBAL_PROD_DB_NAME').upper() else 'fsc_evm_dev' }}"
     schema: bronze
     tables:
-      - name: fsc_evm_vars_master_config
-      - name: fsc_evm_vars_chain_values
+      - name: master_variable_keys
+      - name: master_variable_values
