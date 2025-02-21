@@ -98,7 +98,7 @@ models:
         vertex:
           +enabled: true
     scores_package:
-      +enabled: false
+      +enabled: true
 
 vars:
   "dbt_date:time_zone": GMT
