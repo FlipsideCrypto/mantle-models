@@ -83,6 +83,8 @@ models:
         +enabled: true
       utils:
         +enabled: true
+      variables:
+        +enabled: true
     decoder_package:
       +enabled: false
       abis:

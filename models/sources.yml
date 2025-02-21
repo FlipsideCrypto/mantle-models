@@ -44,3 +44,9 @@ sources:
     schema: silver
     tables:
       - name: verified_abis
+  - name: fsc_evm_bronze
+    database: "{{ 'fsc_evm' if target.database.upper() == var('GLOBAL_PROD_DB_NAME').upper() else 'fsc_evm_dev' }}"
+    schema: bronze
+    tables:
+      - name: master_variable_keys
+      - name: master_variable_values
