@@ -9,7 +9,7 @@ sources:
   - name: bronze_streamline
     database: streamline
     schema: >-
-      {{ var('GLOBAL_PROD_DB_NAME') ~ ('_dev' if var("STREAMLINE_USE_DEV_FOR_EXTERNAL_TABLES", False) else '') }}
+      {{ target.database.upper() ~ ('_DEV' if var("STREAMLINE_USE_DEV_FOR_EXTERNAL_TABLES", false) else '') }}
     tables:
       - name: blocks
       - name: transactions
@@ -19,7 +19,8 @@ sources:
       - name: confirm_blocks
       - name: decoded_logs
   - name: crosschain_silver
-    database: "{{ 'crosschain' if target.database.upper() == var('GLOBAL_PROD_DB_NAME').upper() else 'crosschain_dev' }}"
+    database: >-
+      {{ 'CROSSCHAIN_DEV' if '_DEV' in target.database.upper() else 'CROSSCHAIN' }}
     schema: silver
     tables:
       - name: labels_combined
@@ -45,7 +46,8 @@ sources:
     tables:
       - name: verified_abis
   - name: fsc_evm_bronze
-    database: "{{ 'fsc_evm' if target.database.upper() == var('GLOBAL_PROD_DB_NAME').upper() else 'fsc_evm_dev' }}"
+    database: >-
+      {{ 'FSC_EVM_DEV' if '_DEV' in target.database.upper() else 'FSC_EVM' }}
     schema: bronze
     tables:
       - name: master_variable_keys
