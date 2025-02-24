@@ -44,6 +44,6 @@ jobs:
         run: |
           dbt run --vars '{"STREAMLINE_INVOKE_STREAMS":True}' -m "fsc_evm,tag:streamline_core_complete" "fsc_evm,tag:streamline_core_realtime" "fsc_evm,tag:streamline_core_complete_receipts" "fsc_evm,tag:streamline_core_realtime_receipts" "fsc_evm,tag:streamline_core_complete_confirm_blocks" "fsc_evm,tag:streamline_core_realtime_confirm_blocks"
 
-      - name: Run Chainhead Tests
+      - name: Run Crucial Tests
         run: |
-          dbt test -m "fsc_evm,tag:chainhead"
+          dbt test -m "fsc_evm,tag:chainhead" "fsc_evm,tag:silver_vars"
