@@ -8,6 +8,7 @@ sources:
     tables:
       - name: receipts
       - name: blocks
+      - name: traces
       - name: transactions
       - name: decoded_logs
       - name: confirm_blocks
