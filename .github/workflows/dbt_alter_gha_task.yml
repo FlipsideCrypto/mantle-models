@@ -11,14 +11,14 @@ on:
         description: Name of the workflow to perform the action on, no .yml extension
         required: true
       task_action:
-        type: choice 
+        type: choice
         description: Action to perform
         required: true
         options:
           - SUSPEND
           - RESUME
         default: SUSPEND
-    
+
 env:
   DBT_PROFILES_DIR: ./
 
@@ -39,8 +39,15 @@ jobs:
     uses: FlipsideCrypto/analytics-workflow-templates/.github/workflows/dbt_alter_gha_tasks.yml@AN-4374/upgrade-dbt-1.7
     with:
       workflow_name: |
-         ${{ inputs.workflow_name }}
+        ${{ inputs.workflow_name }}
       task_action: |
-         ${{ inputs.task_action }}
+        ${{ inputs.task_action }}
       environment: workflow_prod
     secrets: inherit
+
+  notify-failure:
+    needs: [called_workflow_template]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
