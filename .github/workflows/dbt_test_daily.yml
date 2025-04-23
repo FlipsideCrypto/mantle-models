@@ -1,11 +1,11 @@
-name: dbt_test_daily 
+name: dbt_test_daily
 run-name: dbt_test_daily
 
 on:
   workflow_dispatch:
     branches:
       - "main"
-    
+
 env:
   DBT_PROFILES_DIR: ./
 
@@ -24,7 +24,7 @@ concurrency:
 jobs:
   run_dbt_jobs:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: workflow_test
 
     steps:
@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
-          
+
       - name: install dependencies
         run: |
           pip install -r requirements.txt
@@ -43,7 +43,14 @@ jobs:
       - name: Build Daily Testing Views
         run: |
           dbt run -m "fsc_evm,tag:daily_test"
-      
+
       - name: Run Daily Tests
         run: |
           dbt test -m "fsc_evm,tag:daily_test"
+
+  notify-failure:
+    needs: [run_dbt_jobs]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
