@@ -1,12 +1,10 @@
-name: dbt_run_scheduled_abis
-run-name: dbt_run_scheduled_abis
+name: dbt_run_streamline_decoded_logs_history
+run-name: dbt_run_streamline_decoded_logs_history
 
 on:
   workflow_dispatch:
     branches:
       - "main"
-<<<<<<< HEAD
-=======
 
 env:
   DBT_PROFILES_DIR: ./
@@ -19,24 +17,11 @@ env:
   DATABASE: "${{ vars.DATABASE }}"
   WAREHOUSE: "${{ vars.WAREHOUSE }}"
   SCHEMA: "${{ vars.SCHEMA }}"
->>>>>>> origin/main
 
 concurrency:
   group: ${{ github.workflow }}
 
 jobs:
-<<<<<<< HEAD
-  called_workflow_template:
-    uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template.yml@pre-release/v4-beta
-    with:
-      command_name: Run ABI Models
-      command: |
-        dbt run -m "fsc_evm,tag:silver,tag:abis" "fsc_evm,tag:gold,tag:abis"
-      command_name_2: Kick off decoded logs history, if there are new user submitted ABIs
-      command_2: |
-        dbt run-operation fsc_evm.run_decoded_logs_history
-    secrets: inherit
-=======
   run_dbt_jobs:
     runs-on: ubuntu-latest
     environment:
@@ -55,13 +40,13 @@ jobs:
           pip install -r requirements.txt
           dbt deps
 
-      - name: Update ABI models
+      - name: Update complete table
         run: |
-          dbt run -m "fsc_evm,tag:silver_abis" "fsc_evm,tag:gold_abis"
+          dbt run -m "fsc_evm,tag:streamline_decoded_logs_complete"
 
-      - name: Kick off decoded logs history, if there are new ABIs from users
+      - name: Decode historical logs
         run: |
-          dbt run-operation fsc_evm.run_decoded_logs_history
+          dbt run-operation fsc_evm.decoded_logs_history --vars '{"STREAMLINE_INVOKE_STREAMS":True}'
 
   notify-failure:
     needs: [run_dbt_jobs]
@@ -69,4 +54,3 @@ jobs:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
->>>>>>> origin/main

@@ -7,9 +7,9 @@ on:
       - "main"
     inputs:
       warehouse:
-        type: choice 
+        type: choice
         description: Snowflake warehouse
-        required: true 
+        required: true
         options:
           - DBT
           - DBT_CLOUD
@@ -17,9 +17,9 @@ on:
         default: DBT
       dbt_command:
         type: string
-        description: 'DBT Run Command'
+        description: "DBT Run Command"
         required: true
-    
+
 env:
   DBT_PROFILES_DIR: ./
   DBT_VERSION: "${{ vars.DBT_VERSION }}"
@@ -65,3 +65,10 @@ jobs:
           path: |
             logs
             target
+
+  notify-failure:
+    needs: [dbt]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

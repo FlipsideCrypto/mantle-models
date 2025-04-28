@@ -11,13 +11,28 @@ on:
         description: Name of the workflow to perform the action on, no .yml extension
         required: true
       task_action:
-        type: choice 
+        type: choice
         description: Action to perform
         required: true
         options:
           - SUSPEND
           - RESUME
         default: SUSPEND
+<<<<<<< HEAD
+=======
+
+env:
+  DBT_PROFILES_DIR: ./
+
+  ACCOUNT: "${{ vars.ACCOUNT }}"
+  ROLE: "${{ vars.ROLE }}"
+  USER: "${{ vars.USER }}"
+  PASSWORD: "${{ secrets.PASSWORD }}"
+  REGION: "${{ vars.REGION }}"
+  DATABASE: "${{ vars.DATABASE }}"
+  WAREHOUSE: "${{ vars.WAREHOUSE }}"
+  SCHEMA: "${{ vars.SCHEMA }}"
+>>>>>>> origin/main
 
 concurrency:
   group: ${{ github.workflow }}
@@ -26,7 +41,23 @@ jobs:
   called_workflow_template:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template_alter_gha_task.yml@pre-release/v4-beta
     with:
+<<<<<<< HEAD
       workflow_name: ${{ inputs.workflow_name }}
       task_action: ${{ inputs.task_action }}
       target: prod
     secrets: inherit
+=======
+      workflow_name: |
+        ${{ inputs.workflow_name }}
+      task_action: |
+        ${{ inputs.task_action }}
+      environment: workflow_prod
+    secrets: inherit
+
+  notify-failure:
+    needs: [called_workflow_template]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+>>>>>>> origin/main

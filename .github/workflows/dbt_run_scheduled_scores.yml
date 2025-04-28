@@ -1,4 +1,3 @@
-
 name: dbt_run_scheduled_scores
 run-name: dbt_run_scheduled_scores
 
@@ -11,6 +10,7 @@ concurrency:
   group: ${{ github.workflow }}
 
 jobs:
+<<<<<<< HEAD
   called_workflow_template:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template.yml@pre-release/v4-beta
     with:
@@ -18,3 +18,33 @@ jobs:
       command: |
         dbt run -m "fsc_evm,tag:scores"
     secrets: inherit
+=======
+  run_dbt_jobs:
+    runs-on: ubuntu-latest
+    environment:
+      name: workflow_prod
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: install dependencies
+        run: |
+          pip install -r requirements.txt
+          dbt deps
+
+      - name: Update scores
+        run: |
+          dbt run -m "fsc_evm,tag:scores"
+
+  notify-failure:
+    needs: [run_dbt_jobs]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+>>>>>>> origin/main

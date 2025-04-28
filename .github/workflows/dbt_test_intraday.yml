@@ -10,6 +10,7 @@ concurrency:
   group: ${{ github.workflow }}
 
 jobs:
+<<<<<<< HEAD
   called_workflow_template:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template.yml@pre-release/v4-beta
     with:
@@ -22,3 +23,38 @@ jobs:
         dbt run -m "fsc_evm,tag:observability"
         dbt test -m "fsc_evm,tag:recent_test"
     secrets: inherit
+=======
+  run_dbt_jobs:
+    runs-on: ubuntu-latest
+    environment:
+      name: workflow_test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: install dependencies
+        run: |
+          pip install -r requirements.txt
+          dbt deps
+
+      - name: Build Recent Testing Views
+        run: |
+          dbt run -m "fsc_evm,tag:recent_test"
+
+      - name: Run Recent Tests
+        run: |
+          dbt run -m "fsc_evm,tag:observability"
+          dbt test -m "fsc_evm,tag:recent_test"
+
+  notify-failure:
+    needs: [run_dbt_jobs]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+>>>>>>> origin/main

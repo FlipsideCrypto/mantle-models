@@ -19,4 +19,17 @@ jobs:
       target: ${{ inputs.environment }}
       command: |
         dbt test --selector 'integration_tests'
+<<<<<<< HEAD
     secrets: inherit
+=======
+      environment: ${{ github.ref == 'refs/heads/main' && 'workflow_prod' || 'workflow_dev' }}
+      warehouse: ${{ vars.WAREHOUSE }}
+    secrets: inherit
+
+  notify-failure:
+    needs: [called_workflow_template]
+    if: failure()
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/slack_notify.yml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+>>>>>>> origin/main
