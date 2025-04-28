@@ -6,12 +6,13 @@ sources:
     schema: |
       {{ target.database.upper() | replace('_DEV', '') ~ '_DEV' if var("STREAMLINE_USE_DEV_FOR_EXTERNAL_TABLES", False) else target.database.upper() | replace('_DEV', '') }}
     tables:
-      - name: receipts
       - name: blocks
-      - name: traces
       - name: transactions
-      - name: decoded_logs
+      - name: receipts
+      - name: receipts_by_hash
+      - name: traces
       - name: confirm_blocks
+      - name: decoded_logs
       - name: contract_abis
   - name: crosschain_silver
     database: >-
@@ -45,6 +46,7 @@ sources:
     schema: silver
     tables:
       - name: verified_abis
+      - name: complete_event_abis
   - name: fsc_evm_admin
     database: >-
       {{ 'FSC_EVM_DEV' if '_DEV' in target.database.upper() else 'FSC_EVM' }}
@@ -57,3 +59,4 @@ sources:
     schema: silver
     tables:
       - name: logs
+      - name: decoded_logs
