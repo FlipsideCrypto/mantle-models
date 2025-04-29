@@ -1,5 +1,5 @@
-name: dbt_run_full_observability
-run-name: dbt_run_full_observability
+name: dbt_run_scheduled_decoder
+run-name: dbt_run_scheduled_decoder
 
 on:
   workflow_dispatch:
@@ -13,10 +13,7 @@ jobs:
   called_workflow_template:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template.yml@pre-release/v4-beta
     with:
-      command_name: Run Observability Models
+      command_name: Run Decoder Models
       command: |
-        dbt run --threads 2 --vars '{"MAIN_OBSERV_FULL_TEST_ENABLED":True}' -m "fsc_evm,tag:observability"
+        dbt run -m "fsc_evm,tag:bronze,tag:decoded_logs" "fsc_evm,tag:silver,tag:decoded_logs" "fsc_evm,tag:gold,tag:decoded_logs"
     secrets: inherit
-  
-
-

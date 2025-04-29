@@ -1,11 +1,11 @@
-name: dbt_run_scheduled_scores
-run-name: dbt_run_scheduled_scores
+name: dbt_run_heal_models
+run-name: dbt_run_heal_models
 
 on:
   workflow_dispatch:
     branches:
       - "main"
-
+    
 concurrency:
   group: ${{ github.workflow }}
 
@@ -13,7 +13,7 @@ jobs:
   called_workflow_template:
     uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template.yml@pre-release/v4-beta
     with:
-      command_name: Run Scores Models
+      command_name: Run Heal Models
       command: |
-        dbt run -m "fsc_evm,tag:scores"
+        dbt run -m "$PROJECT_NAME,tag:heal" --vars '{"HEAL_MODEL":True}'
     secrets: inherit
