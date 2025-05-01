@@ -1,5 +1,5 @@
-name: dbt_alter_gha_task
-run-name: dbt_alter_gha_task
+name: dbt_alter_gha_tasks
+run-name: dbt_alter_gha_tasks
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
         description: Name of the workflow to perform the action on, no .yml extension
         required: true
       task_action:
-        type: choice
+        type: choice 
         description: Action to perform
         required: true
         options:
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   called_workflow_template:
-    uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template_alter_gha_task.yml@pre-release/v4-beta
+    uses: FlipsideCrypto/fsc-evm/.github/workflows/dbt_run_template_alter_gha_tasks.yml@pre-release/v4-beta
     with:
       workflow_name: ${{ inputs.workflow_name }}
       task_action: ${{ inputs.task_action }}
