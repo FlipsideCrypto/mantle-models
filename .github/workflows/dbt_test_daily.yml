@@ -19,5 +19,5 @@ jobs:
         dbt run -m "fsc_evm,tag:daily_test"
       command_name_2: Run Daily Tests (all tests excluding full, recent and misc. others)
       command_2: |
-        dbt test --exclude "fsc_evm,tag:full_test" "fsc_evm,tag:recent_test" "fsc_evm,tag:vertex" "fsc_evm,tag:gha_tasks" "fsc_evm.curated_package.protocols.vertex.tests.dbt_expectations_expect_row_values_to_have_recent_data_silver__vertex_collateral_BLOCK_TIMESTAMP__day__3 fsc_evm.curated_package.protocols.vertex.tests.dbt_expectations_expect_row_values_to_have_recent_data_silver__vertex_liquidations_BLOCK_TIMESTAMP__day__14 fsc_evm.curated_package.protocols.vertex.tests.vertex_product_level_recency_silver__vertex_spot_product_type_spot_AND_product_id_0 fsc_evm.curated_package.protocols.vertex.tests.vertex_missing_products_silver__vertex_market_stats_"livequery_models
+        dbt test --exclude "fsc_evm,tag:full_test" "fsc_evm,tag:recent_test" "fsc_evm,tag:vertex" "fsc_evm,tag:gha_tasks" livequery_models
     secrets: inherit
