@@ -101,6 +101,10 @@ models:
           +enabled: true
       stats:
         +enabled: true
+      defi:
+        +enabled: false
+        bridge:
+          +enabled: true
     scores_package:
       +enabled: true
 
