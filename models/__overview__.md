@@ -40,6 +40,9 @@ There is more information on how to use dbt docs in the last section of this doc
 - [ez_asset_metadata](https://flipsidecrypto.github.io/mantle-models/#!/model/model.fsc_evm.price__ez_asset_metadata)
 - [ez_prices_hourly](https://flipsidecrypto.github.io/mantle-models/#!/model/model.fsc_evm.price__ez_prices_hourly)
 
+### DeFi Tables (mantle.defi)
+- [ez_bridge_activity](https://flipsidecrypto.github.io/mantle-models/#!/model/model.mantle_models.defi__ez_bridge_activity)
+
 ### Flipside Partner Tables (mantle.partner_name)
 
 **Vertex Tables:**
