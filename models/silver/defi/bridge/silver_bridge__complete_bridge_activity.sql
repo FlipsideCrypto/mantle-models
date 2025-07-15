@@ -1,4 +1,5 @@
 -- depends_on: {{ ref('silver__complete_token_prices') }}
+-- depends_on: {{ ref('price__ez_asset_metadata') }}
 {{ config(
     materialized = 'incremental',
     incremental_strategy = 'delete+insert',
@@ -317,6 +318,7 @@ heal_model AS (
                     GROUP BY
                         1
                 )
+        ),
         newly_verified_tokens as (
           select token_address
           from {{ ref('price__ez_asset_metadata') }}
